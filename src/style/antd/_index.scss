@@ -1,0 +1,4 @@
+// unplugin-vue-components无法识别非组件模块样式，需要手动引入
+@import 'ant-design-vue/es/message/style/index.css';
+@import 'ant-design-vue/es/modal/style/index.css';
+@import 'ant-design-vue/es/notification/style/index.css';
