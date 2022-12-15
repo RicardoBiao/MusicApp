@@ -1,10 +1,12 @@
 /*
  * @Author: liweibiao
  * @Date: 2022-12-13 10:23:09
- * @LastEditTime: 2022-12-13 10:30:17
+ * @LastEditTime: 2022-12-14 15:45:06
  * @LastEditors: liweibiao
  * @Description: 
  */
+
+
 export default interface PlaylistParams {
     /** 可选值为 'new' 和 'hot', 分别对应最新和最热 , 默认为 'hot' */
     order?: 'new' | 'hot',
@@ -16,4 +18,25 @@ export default interface PlaylistParams {
     offset?: number,
     /** 分页参数,取上一页最后一个歌单的 updateTime 获取下一页数据 */
     before?: any,
+}
+
+/**
+ * 歌曲
+ */
+export interface Song {
+    id: string,
+    url: string,
+    name: string,
+    /** 歌曲图片url */
+    picUrl?: string,
+    /** 歌手 */
+    singer?: Singer,
+}
+
+/**
+ * 歌手
+ */
+export interface Singer {
+    id: string,
+    name: string,
 }

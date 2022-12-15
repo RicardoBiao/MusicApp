@@ -1,7 +1,7 @@
 <!--
  * @Author: liweibiao
  * @Date: 2022-11-15 10:42:32
- * @LastEditTime: 2022-12-13 16:55:23
+ * @LastEditTime: 2022-12-15 15:40:10
  * @LastEditors: liweibiao
  * @Description:
 -->
@@ -12,10 +12,23 @@
 import HelloWorld from './shared/components/HelloWorld.vue'
 import { Button } from 'vant'
 import { getQrCode, createQrCode, checkQrCode, getLoginStatus } from './services/user.service'
+import { getSongUrl } from './services/song.service'
 import { useUserStore } from './stores/user'
 import { storeToRefs } from 'pinia'
 import { message } from 'ant-design-vue'
 import { ref } from 'vue'
+import { useEventBus } from '@vueuse/core'
+import { song } from './core/bus/song'
+import * as Tone from 'tone'
+
+const player = new Tone.Player().toDestination()
+player.autostart = true
+
+const songBus = useEventBus(song)
+
+songBus.on((e) => {
+  console.warn('songBus===>', e)
+})
 
 const userStore = useUserStore()
 const backgroundUrl = ref('')
@@ -32,6 +45,15 @@ const test = () => {
         console.error('getLoginStatus-err===>', err)
       })
   } else {
+    getSongUrl('347230')
+      .then(res => {
+        console.log('xxx-res===>', res)
+        const song = res.data.data[0]
+        songBus.emit({ id: song.id, name: '123', url: song.url })
+      })
+      .catch(err => {
+        console.error('xxx-err===>', err)
+      })
     getQrCode()
       .then(res => {
         console.log('getQrCode-res===>', res)
